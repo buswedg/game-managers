@@ -90,8 +90,8 @@ def get_games_dict(game_id=None):
     return games_dict
 
 
-def update_egl_manifest(game_id, new_install_dir):
-    manifest_path = os.path.join(EGL_MANIFEST_DIR, game_id + ".item")
+def update_egl_manifest(app_name, new_install_dir):
+    manifest_path = os.path.join(EGL_MANIFEST_DIR, app_name + ".item")
     shutil.copyfile(manifest_path, f'{manifest_path}.bak')
 
     manifest_data = read_json_file(manifest_path)
@@ -104,7 +104,7 @@ def update_egl_manifest(game_id, new_install_dir):
         json.dump(manifest_data, f, indent=4)
 
 
-def update_legendary_manifest(game_id, new_install_dir):
+def update_legendary_manifest(app_name, new_install_dir):
     manifest_path = os.path.join(LEGENDARY_MANIFEST_DIR, 'installed.json')
     shutil.copyfile(manifest_path, f'{manifest_path}.bak')
 
@@ -112,19 +112,21 @@ def update_legendary_manifest(game_id, new_install_dir):
 
     found_game = False
     for manifest_id, manifest_entry in manifest_data.items():
-        if manifest_entry.get('egl_guid') == game_id:
+        if manifest_entry.get('app_name') == app_name:
             manifest_entry['install_path'] = new_install_dir
             found_game = True
             break
 
     if found_game:
+        print(f"Updating {app_name} install path to {new_install_dir}.")
         with open(manifest_path, 'w') as f:
             json.dump(manifest_data, f, indent=4)
     else:
-        print(f"WARNING: {game_id} not found in the manifest. No changes made.")
+        print(f"WARNING: {app_name} not found in the manifest. No changes made.")
 
 
 def move_game(game_tuple, desired_base_dir):
+    app_name = game_tuple[3]
     source_install_game_dir = game_tuple[4]
 
     base_game_dir_name = os.path.basename(source_install_game_dir)
@@ -138,9 +140,9 @@ def move_game(game_tuple, desired_base_dir):
         if not game_dircmp.left_only and not game_dircmp.right_only:
             print("\nCopy successful, updating manifest and removing old install location.")
             if UPDATE_EGL_MANIFEST:
-                update_egl_manifest(game_tuple[1], new_install_game_dir)
+                update_egl_manifest(app_name, new_install_game_dir)
             if UPDATE_LEGENDARY_MANIFEST:
-                update_legendary_manifest(game_tuple[1], new_install_game_dir)
+                update_legendary_manifest(app_name, new_install_game_dir)
             if os.path.exists(source_install_game_dir):
                 shutil.rmtree(source_install_game_dir)
         else:

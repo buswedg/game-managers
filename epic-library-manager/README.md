@@ -8,9 +8,9 @@ Epic Library Manager allows users to easily move their Epic Games Store (EGS) ga
 
 - Python 3.x and virtualenv installed, e.g.:
 
-	```bash
-	pip install virtualenv
-	```
+    ```bash
+    pip install virtualenv
+    ```
 
 ### Installation
 
@@ -28,10 +28,10 @@ Epic Library Manager allows users to easily move their Epic Games Store (EGS) ga
 
 Close Epic Game Store, then either start run.bat from windows directly, or run the following via Command Prompt:
 
-	```bash
-	call env/Scripts/activate
-	python cli.py
-	deactivate
-	```
+    ```bash
+    call env/Scripts/activate
+    python cli.py
+    deactivate
+    ```
 
 Follow the on-screen instructions to manage your game collection.
