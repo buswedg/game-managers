@@ -1,8 +1,8 @@
 import os
 import shutil
-import psutil
 from pathlib import Path
 
+import psutil
 from tqdm import tqdm
 
 

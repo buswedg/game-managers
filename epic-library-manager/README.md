@@ -1,6 +1,7 @@
 # Epic Library Manager
 
-Epic Library Manager allows users to easily move their Epic Games Store (EGS) games between different drives/ locations, by offering routines to move the game files and update Epic's and/ or the legendary-cli game manifests accordingly.
+Allows users to move their Epic Games Store (EGS) games between different drives/ locations, by offering routines to
+move the game files and update Epic's and/ or the legendary-cli game manifests accordingly.
 
 ## Getting Started
 

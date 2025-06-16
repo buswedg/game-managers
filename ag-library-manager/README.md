@@ -1,6 +1,7 @@
 # Amazon Games Library Manager
 
-Amazon Games Library Manager allows users to easily move their Amazon games between different drives/ locations, offering routines to move the game files and update Amazon's sqlite db and/ or the nile-cli game manifest accordingly.
+Allows users to move their Amazon games between different drives/ locations, offering routines to move the game files
+and update Amazon's sqlite db and/ or the nile-cli game manifest accordingly.
 
 ## Getting Started
 

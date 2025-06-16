@@ -1,6 +1,7 @@
 # Steam Library Manager
 
-Steam Library Manager allows users to easily move their Steam games between different drives/ locations, by offering routines to move the game files and update Steam's game manifest files accordingly.
+Allows users to move their Steam games between different drives/ locations, by offering routines to move the game files
+and update Steam's game manifest files accordingly.
 
 ## Getting Started
 
@@ -8,9 +9,9 @@ Steam Library Manager allows users to easily move their Steam games between diff
 
 - Python 3.x and virtualenv installed, e.g.:
 
-	```bash
-	pip install virtualenv
-	```
+    ```bash
+    pip install virtualenv
+    ```
 
 ### Installation
 
