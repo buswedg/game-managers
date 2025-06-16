@@ -9,9 +9,9 @@ and update Amazon's sqlite db and/ or the nile-cli game manifest accordingly.
 
 - Python 3.x and virtualenv installed, e.g.:
 
-    ```bash
-    pip install virtualenv
-    ```
+```bash
+pip install virtualenv
+```
 
 ### Installation
 
@@ -19,20 +19,20 @@ and update Amazon's sqlite db and/ or the nile-cli game manifest accordingly.
 
 2. Set up a virtual environment, activate it, and install requirements via Command Prompt:
 
-    ```bash
-    python -m venv env
-    call env/Scripts/activate
-    pip install -r requirements.txt
-    ```
+```bash
+python -m venv env
+call env/Scripts/activate
+pip install -r requirements.txt
+```
 
 ## Usage
 
 Close Amazon Games, then either start run.bat from windows directly, or run the following via Command Prompt:
 
-    ```bash
-    call env/Scripts/activate
-    python cli.py
-    deactivate
-    ```
+```bash
+call env/Scripts/activate
+python cli.py
+deactivate
+```
 
 Follow the on-screen instructions to manage your game collection.
