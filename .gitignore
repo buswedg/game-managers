@@ -1,6 +1,9 @@
 .idea/
 __pycache__/
 env/
+logs/
+elamigos-library-manager/
 .env
-elamigos-library-manager
-**/logs/
+docker-compose.pycharm.yml
+Dockerfile
+/requirements.txt

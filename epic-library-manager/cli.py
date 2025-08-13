@@ -59,6 +59,24 @@ def setup_logging():
     return logger
 
 
+def get_tuple_from_game_dict(games_dict, search_key, is_index=False):
+    """Finds and returns a game tuple from a games_dict based on its game index or ID."""
+    selected_tuple = None
+    for _, game_tuples in games_dict.items():
+        for game_tuple in game_tuples:
+            if is_index:
+                if game_tuple[0] == search_key:
+                    selected_tuple = game_tuple
+                    break
+            else:
+                if game_tuple[1] == search_key:
+                    selected_tuple = game_tuple
+                    break
+        if selected_tuple:
+            break
+    return selected_tuple
+
+
 def fetch_egl_games(game_id=None):
     """Fetch games from EGL manifest files."""
     logger = logging.getLogger('epic_games_manager')
@@ -250,7 +268,6 @@ def update_legendary_manifest(app_name, new_install_dir):
         return False
 
     try:
-        # Create backup
         backup_path = f'{manifest_path}.bak'
         shutil.copyfile(manifest_path, backup_path)
         logger.debug(f"Created backup at {backup_path}")
@@ -357,11 +374,11 @@ def list_games(games_dict):
     logger = logging.getLogger('epic_games_manager')
     logger.debug("Listing games")
 
-    print("GAMES BY BASE INSTALL LOCATION:")
+    logger.info("GAMES BY BASE INSTALL LOCATION:")
     for base_install_dir, game_tuples in games_dict.items():
-        print(f"\nBase Install Location: {base_install_dir}")
+        logger.info(f"\nBase Install Location: {base_install_dir}")
         for (index, game_id, game_name, app_name, install_dir) in game_tuples:
-            print(f"  {index}. {game_id} - {game_name}")
+            logger.info(f"  {index}. {game_id} - {game_name}")
 
     logger.info(f"Listed {sum(len(games) for games in games_dict.values())} games across {len(games_dict)} locations")
 
@@ -378,7 +395,7 @@ def interactive(games_dict):
         logger.info("User selected to move all games")
 
         for index, location in enumerate(INSTALL_DIR_OPTIONS, start=1):
-            print(f"{index}. Option {index}: {location}")
+            logger.info(f"{index}. Option {index}: {location}")
 
         try:
             desired_option = int(input(f"\nEnter your choice (1-{len(INSTALL_DIR_OPTIONS)}): "))
@@ -398,37 +415,28 @@ def interactive(games_dict):
                         move_game(game_tuple, desired_base_dir)
             else:
                 logger.warning(f"Invalid choice: {desired_option}")
-                print("ERROR: Invalid choice. Exiting.")
 
         except ValueError as e:
             logger.error(f"Invalid input in interactive mode: {e}")
-            print("ERROR: Invalid input. Please enter a valid choice.")
 
     else:
         try:
-            selected_tuple = None
             selected_index = int(selected_index)
             logger.debug(f"Looking for game with index: {selected_index}")
 
-            for _, game_tuples in games_dict.items():
-                for game_tuple in game_tuples:
-                    game_index = game_tuple[0]
-                    if game_index == selected_index:
-                        selected_tuple = game_tuple
-                        break
-
+            selected_tuple = get_tuple_from_game_dict(games_dict, selected_index, is_index=True)
             if selected_tuple:
                 logger.info(f"Selected game: {selected_tuple[2]} ({selected_tuple[3]})")
 
-                print(f"\nSelected Game:")
-                print(f"Game ID: {selected_tuple[1]}")
-                print(f"Game Name: {selected_tuple[2]}")
-                print(f"Current Install Location: {selected_tuple[4]}")
+                logger.info(f"\nSelected Game:")
+                logger.info(f"Game ID: {selected_tuple[1]}")
+                logger.info(f"Game Name: {selected_tuple[2]}")
+                logger.info(f"Current Install Location: {selected_tuple[4]}")
 
-                print("\nChoose a preferred installation location option:")
+                logger.info("\nChoose a preferred installation location option:")
 
                 for index, location in enumerate(INSTALL_DIR_OPTIONS, start=1):
-                    print(f"{index}. Option {index}: {location}")
+                    logger.info(f"{index}. Option {index}: {location}")
 
                 try:
                     desired_option = int(input(f"\nEnter your choice (1-{len(INSTALL_DIR_OPTIONS)}): "))
@@ -440,17 +448,15 @@ def interactive(games_dict):
                         move_game(selected_tuple, desired_base_dir)
                     else:
                         logger.warning(f"Invalid destination choice: {desired_option}")
-                        print("ERROR: Invalid choice. Exiting.")
+
                 except ValueError as e:
                     logger.error(f"Invalid input for destination choice: {e}")
-                    print("ERROR: Invalid input. Please enter a valid choice.")
+
             else:
                 logger.warning(f"Game with index {selected_index} not found")
-                print("ERROR: Invalid Game ID.")
 
         except ValueError as e:
             logger.error(f"Invalid game index input: {e}")
-            print("ERROR: Invalid input. Please enter a valid game index.")
 
 
 def main():
@@ -477,11 +483,21 @@ def main():
             logger.info("Running in list mode")
             games_dict = get_games_dict()
             list_games(games_dict)
+
         elif args.command == "move":
             logger.info(f"Running in move mode for game_id: {args.game_id}")
-            # Note: This part needs to be updated to work with the new tuple structure
-            logger.warning("Direct move command not fully implemented with new tuple structure")
-            # move_game(args.game_id, args.desired_base_dir)
+
+            games_dict = get_games_dict(game_id=args.game_id)
+            if not games_dict:
+                logger.error(f"Game with ID {args.game_id} not found.")
+                return
+
+            selected_tuple = get_tuple_from_game_dict(games_dict, args.game_id)
+            if selected_tuple:
+                move_game(selected_tuple, args.desired_base_dir)
+            else:
+                logger.error(f"Game with ID {args.game_id} not found in the manifest.")
+
         else:
             logger.info("Running in interactive mode")
             games_dict = get_games_dict()
@@ -491,6 +507,7 @@ def main():
     except Exception as e:
         logger.error(f"Unhandled exception in main: {e}", exc_info=True)
         raise
+
     finally:
         logger.info("=== Epic Games Library Manager Finished ===")
 
