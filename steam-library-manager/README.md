@@ -3,6 +3,8 @@
 Allows users to move their Steam games between different drives/ locations, by offering routines to move the game files
 and update Steam's game manifest files accordingly.
 
+Note: Steam offers this functionality through their launcher. However, I'm going to keep this for the CLI.
+
 ## Getting Started
 
 ### Prerequisites
@@ -27,7 +29,7 @@ pip install -r requirements.txt
 
 ## Usage
 
-Close Epic Game Store, then either start run.bat from windows directly, or run the following via Command Prompt:
+Close Steam, then either start run.bat from windows directly, or run the following via Command Prompt:
 
 ```bash
 call env/Scripts/activate

@@ -12,7 +12,7 @@ if "%~1"=="-elevated" (
 )
 
 echo Requesting administrator privileges...
-powershell -Command "Start-Process cmd.exe -ArgumentList '/c \"%~f0\" -elevated' -Verb RunAs"
+powershell -Command "Start-Process cmd.exe -ArgumentList '/k \"%~f0\" -elevated' -Verb RunAs"
 exit /b
 
 :main
@@ -20,4 +20,5 @@ set "SCRIPT_PATH=%~dp0"
 call "%SCRIPT_PATH%env\Scripts\activate"
 python "%SCRIPT_PATH%cli.py"
 deactivate
+echo Script execution completed.
 pause

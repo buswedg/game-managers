@@ -27,7 +27,7 @@ pip install -r requirements.txt
 
 ## Usage
 
-Close Epic Game Store, then either start run.bat from windows directly, or run the following via Command Prompt:
+Close EGS, then either start run.bat from windows directly, or run the following via Command Prompt:
 
 ```bash
 call env/Scripts/activate
