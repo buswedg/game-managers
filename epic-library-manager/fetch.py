@@ -71,7 +71,7 @@ def _fetch_egl_games():
 
 
 def _fetch_legendary_games():
-    """Fetch games from Legendary manifest file."""
+    """Fetch games from the Legendary manifest file."""
     if not LEGENDARY_MANIFEST_PATH or not os.path.exists(LEGENDARY_MANIFEST_PATH):
         logger.error(f"Legendary manifest installed.json not found: {LEGENDARY_MANIFEST_PATH}")
         return []

@@ -1,7 +1,7 @@
 # Steam Library Manager
 
-Allows users to move their Steam games between different drives/ locations, by offering routines to move the game files
-and update Steam's game manifest files accordingly.
+Allows users to move their Steam games between different locations, by offering routines to move the game files
+and update Steam's manifest files accordingly.
 
 Note: Steam offers this functionality through their launcher. However, I'm going to keep this for the CLI.
 

@@ -78,7 +78,7 @@ def _fetch_ag_games():
 
 
 def _fetch_nile_games():
-    """Fetch games from Nile manifest file."""
+    """Fetch games from the Nile manifest file."""
     if not NILE_MANIFEST_PATH or not os.path.exists(NILE_MANIFEST_PATH):
         logger.error(f"Nile manifest library.json not found: {NILE_MANIFEST_PATH}")
         return []
