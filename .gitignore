@@ -1,0 +1,9 @@
+.idea/
+__pycache__/
+env/
+logs/
+grabbed-library-manager/
+.env
+docker-compose.pycharm.yml
+Dockerfile
+/requirements.txt
